@@ -35,97 +35,90 @@ Publish the website in the given URL.
 
 ```
 math.html
-math.html
 
-{% load static %}
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>math</title>
-    <style>
-        
-h1{
-    border: 2px solid black;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 5px;
-    position: fixed;
-    top: 200px;
-    right: 500px;
-    font-size: xx-large;
-    font-weight: bolder;
-    font-variant: small-caps;
-    background: linear-gradient(to bottom,red,yellow,red);
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    color: grey;
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<title> Power </title>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<style type="text/css">
+body {
+    background-color: rgb(233, 250, 230);
 }
-form{
-    border: 2px solid black;
-    background-color: rgba(128, 128, 128, 0.064) ;
-    padding: 30px;
-    margin: 10px;
-    border-radius: 10px;
-    width: 425px;
-    position: fixed;
-    top: 300px;
-    left: 527px;
-   
-    background-size: 60%;
-    background-repeat: no-repeat;
-    background-position: left;
-    
+.edge {
+    width: 100%;
+    padding-top: 250px;
+    text-align: center;
 }
-
+.box {
+    display: inline-block;
+    border: thick dashed rgb(117, 6, 243);
+    width: 500px;
+    min-height: 300px;
+    font-size: 20px;
+    background-color: pink(167, 240, 9);
+}
+.formelt {
+    color: sky blue;
+    text-align: center;
+    margin-top: 7px;
+    margin-bottom: 6px;
+}
+h1 {
+    color: violet;
+    padding-top: 20px;
+}
 </style>
 </head>
 <body>
-    <h1 align="center" > power of a lamp filament</h1>
-    <form align="center" method="POST">
-    {%csrf_token%}
-     
-    <div class="power">
-
-        <label for="INTENSITY"><b>INTENSITY:</b></label>
-        <input type="text" name="intensity" id="INTENSITY" placeholder="Enter the Value" value="{{i}}">
+<div class="edge">
+    <div class="box">
+        <h1> Power </h1>
+        <h3>Praisy Nishitha (24900090)</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="formelt">
+                Intensity: <input type="text" name="intensity" value="{{i}}">m<br/>
+            </div>
+            <div class="formelt">
+                Resistance: <input type="text" name="resistance" value="{{r}}">m<br/>
+            </div>
+            <div class="formelt">
+                <input type="submit" value="Calculate"><br/>
+            </div>
+            <div class="formelt">
+                Power: <input type="text" name="power" value="{{power}}">m<sup>2</sup><br/>
+            </div>
+        </form>
     </div>
-    <br>
-    <div class="power">
-        <label for="RESISTANCE"><b>RESISTANCE:</b></label>
-        <input type="text" name="resistance" id="RESISTANCE" placeholder="Enter the Value" value="{{r}}">
-    </div>
-    <br>
-    <input type="submit" value="CALCULATE">
-    <br>
-    <br>
-    <div class="power">
-        <label for="POWER"><b>POWER:</b></label>
-        <input type="text" name="POWER" id="POWER" placeholder="Answer" value="{{power}}">
-        
-    </div>
-</form>
+</div>
 </body>
 </html>
 
 views.py
 
-from django.shortcuts import render
-def powerlamp(request): 
+from django.shortcuts import render 
+def power(request): 
     context={} 
-    context['power']="0" 
-    context['i']="0" 
-    context['r']="0" 
-    if request.method=='POST': 
+    context['power'] = "0" 
+    context['i'] = "0" 
+    context['r'] = "0" 
+    if request.method == 'POST': 
         print("POST method is used")
-        i=request.POST.get('intensity','0')
-        r=request.POST.get('resistance','0')
+        i = request.POST.get('intensity','0')
+        r = request.POST.get('resistance','0')
         print('request=',request) 
-        print('intensity=',i) 
-        print('resistance=',r) 
-        power=(int(i) ** 2 ) * int(r) 
-        context['power']=power
-        context['i']=i
-        context['r']=r 
+        print('Intensity=',i) 
+        print('Resistance=',r) 
+        power = int(i) * int(i) *int(r)
+        context['power'] = power 
+        context['i'] = i
+        context['r'] = r 
         print('Power=',power) 
-    return render(request,'mathapp\math.html',context)
+    return render(request,'mathapp/math.html',context)
 
 urls.py
 
@@ -134,17 +127,17 @@ from django.urls import path
 from mathapp import views 
 urlpatterns = [ 
     path('admin/', admin.site.urls), 
-    path('powerlamp/',views.powerlamp,name="powerlamp"),
-    path('',views.powerlamp,name="powerlamproot")
+    path('power/',views.power,name="power"),
+    path('',views.power,name="power")
 ]
+
+
 
 ```
 ## SERVER SIDE PROCESSING:
-![alt text](<Screenshot (22).png>)
 
 ## HOMEPAGE:
 
-![alt text](<Screenshot (21).png>)
 
 ## RESULT:
 The program for performing server side processing is completed successfully.
